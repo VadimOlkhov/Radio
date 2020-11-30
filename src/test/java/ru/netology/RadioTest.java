@@ -1,89 +1,187 @@
 package ru.netology;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
-
-    Radio station = new Radio(9);
+    @Test
+    public void nextCurrentStationTestNormalStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(4);
+        radio.nextCurrentStation();
+        assertEquals(5,radio.getCurrentStation());
+    }
 
     @Test
-    public void enteredMaxNumberStation() {
-        int maxNumberStation = 3;
-        Radio station = new Radio(maxNumberStation);
-        int actual = station.getMaxNumberStation();
-        int expected = maxNumberStation;
-        assertEquals(expected, actual);
+    public void nextCurrentStationTestMaxBorderStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(9);
+        radio.nextCurrentStation();
+        assertEquals(0, radio.getCurrentStation());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "NumberStationEnter,0,0",
-            "NumberStationEnter,6,6",
-            "NumberStationEnter,9,9",
-            "NumberStationEnter,-1,0",
-            "NumberStationEnter,10,9"
-    })
-    public void numberStationEntered(String name, int enteredNumberStation, int expected) {
-        station.setCurrentNumberStation(enteredNumberStation);
-        station.numberStationEntered(enteredNumberStation);
-        int actual = station.getCurrentNumberStation();
-        assertEquals(expected, actual);
+    @Test
+    public void prevCurrentStationTestNormalStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(4);
+        radio.prevCurrentStation();
+        assertEquals(3,radio.getCurrentStation());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "NumberStationFrom_0Forward,0,1",
-            "NumberStationFrom_5Forward,5,6",
-            "NumberStationFrom_9Forward,9,0",
-    })
-    public void numberStationNext(String name, int currentNumberStation, int expected) {
-        station.setCurrentNumberStation(currentNumberStation);
-        station.numberStationNext();
-        int actual = station.getCurrentNumberStation();
-        assertEquals(expected, actual);
+    @Test
+    public void prevCurrentStationTestMinBorderStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(0);
+        radio.prevCurrentStation();
+        assertEquals(9, radio.getCurrentStation());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "NumberStationFrom_0Forward,0,9",
-            "NumberStationFrom_5Forward,5,4",
-            "NumberStationFrom_9Forward,9,8"
-    })
-    public void numberStationPrev(String name, int currentNumberStation, int expected) {
-        station.setCurrentNumberStation(currentNumberStation);
-        station.numberStationPrev();
-        int actual = station.getCurrentNumberStation();
-        assertEquals(expected, actual);
+    @Test
+    public void remoteCurrentStationTestNormalStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(4);
+        radio.remoteCurrentStation(4);
+        assertEquals(4,radio.getCurrentStation());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "volumeUpFrom_0,0,1",
-            "volumeUpFrom_5,65,66",
-            "volumeUpFrom_max,100,100"
-
-    })
-    public void volumeStationUp(String name, int currentSoundVolume, int expected) {
-        station.setCurrentSoundVolume(currentSoundVolume);
-        station.volumeStationUp();
-        int actual = station.getCurrentSoundVolume();
-        assertEquals(expected, actual);
+    @Test
+    public void remoteCurrentStationTestOverMaxStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(4);
+        radio.remoteCurrentStation(10);
+        assertEquals(9,radio.getCurrentStation());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "volumeDownFrom_100,100,99",
-            "volumeDownFrom_60,60,59",
-            "volumeDownFrom_min,0,0"
-    })
-    public void volumeStationDoun(String name, int currentSoundVolume, int expected) {
-        station.setCurrentSoundVolume(currentSoundVolume);
-        station.volumeStationDoun();
-        int actual = station.getCurrentSoundVolume();
-        assertEquals(expected, actual);
+    @Test
+    public void remoteCurrentStationTestUndereMinStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(4);
+        radio.remoteCurrentStation(-1);
+        assertEquals(0,radio.getCurrentStation());
     }
+
+    @Test
+    public void nextCurrentVolumeTestNormalVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(4);
+        radio.nextCurrentVolume();
+        assertEquals(5,radio.getCurrentVolume());
+    }
+
+    @Test
+    public void nextCurrentVolumeTestMaxBorderVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(10);
+        radio.nextCurrentVolume();
+        assertEquals(10, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void prevCurrentVolumeTestNormalVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(4);
+        radio.prevCurrentVolume();
+        assertEquals(3,radio.getCurrentVolume());
+    }
+
+    @Test
+    public void prevCurrentVolumeTestMinBorderVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(0);
+        radio.prevCurrentVolume();
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void setMaxStationTest(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        assertEquals(9,radio.getMaxStation());
+    }
+
+    @Test
+    public void setMinStationTest(){
+        Radio radio = new Radio();
+        radio.setMinStation(0);
+        assertEquals(0,radio.getMinStation());
+    }
+
+    @Test
+    public void setCurrentStationTestOverMaxStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(8);
+        radio.setCurrentStation(60);
+        assertEquals(8, radio.getCurrentStation());
+    }
+
+    @Test
+    public void setCurrentStationTestUnderMinStation(){
+        Radio radio = new Radio();
+        radio.setMaxStation(9);
+        radio.setMinStation(0);
+        radio.setCurrentStation(8);
+        radio.setCurrentStation(-1);
+        assertEquals(8, radio.getCurrentStation());
+    }
+
+    @Test
+    public void setMaxVolumeTest(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        assertEquals(10,radio.getMaxVolume());
+    }
+
+    @Test
+    public void setMinVolumeTest(){
+        Radio radio = new Radio();
+        radio.setMinVolume(0);
+        assertEquals(0,radio.getMinVolume());
+    }
+
+    @Test
+    public void setCurrentVolumeTestOverMaxVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(7);
+        radio.setCurrentVolume(60);
+        assertEquals(7, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void setCurrentVolumeTestUnderMinVolume(){
+        Radio radio = new Radio();
+        radio.setMaxVolume(10);
+        radio.setMinVolume(0);
+        radio.setCurrentVolume(7);
+        radio.setCurrentVolume(-1);
+        assertEquals(7, radio.getCurrentVolume());
+    }
+
 }
+
