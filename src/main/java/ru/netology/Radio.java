@@ -1,7 +1,14 @@
 package ru.netology;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.security.PrivateKey;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Radio {
     private int minNumberStation = 0;
     private int maxNumberStation = 9;
@@ -10,56 +17,17 @@ public class Radio {
     private int currentNumberStation = 5;
     private int currentSoundVolume = 50;
 
-
-    public void setCurrentNumberStation(int currentNumberStation) {
-        this.currentNumberStation = currentNumberStation;
-    }
-
-    public int getCurrentNumberStation() {
-        return currentNumberStation;
-    }
-
-    public void setCurrentSoundVolume(int currentSoundVolume) {
-        this.currentSoundVolume = currentSoundVolume;
-    }
-
-    public int getCurrentSoundVolume() {
-        return currentSoundVolume;
-    }
-
-    public int getMaxNumberStation() {
-        return maxNumberStation;
-    }
-
-    public Radio(int maxNumberStation) {
-        this.maxNumberStation = maxNumberStation;
-    }
-
-    public void numberStationEntered(int currentNumberStation) {
-        if (currentNumberStation >= maxNumberStation) {
-            this.currentNumberStation = maxNumberStation;
-            return;
-        }
-        if (currentNumberStation <= minNumberStation) {
-            this.currentNumberStation = minNumberStation;
-            return;
-        }
-        this.currentNumberStation=currentNumberStation;
-    }
-
-    public void numberStationNext() {
+    public Radio(int currentNumberStation) {
         if (currentNumberStation == maxNumberStation) {
             this.currentNumberStation = minNumberStation;
-            return;
-        }
+            return;}
         currentNumberStation++;
+        this.currentNumberStation = currentNumberStation;
         return;
     }
 
     public void numberStationPrev() {
-        if (currentNumberStation == minNumberStation) {
-            currentNumberStation = maxNumberStation + 1;
-        }
+        if (currentNumberStation == minNumberStation) currentNumberStation = maxNumberStation+1;
         currentNumberStation--;
         return;
     }
@@ -84,7 +52,5 @@ public class Radio {
             return;
         }
     }
-
 }
-
 
