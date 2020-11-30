@@ -4,53 +4,70 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.security.PrivateKey;
-
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
+
 public class Radio {
-    private int minNumberStation = 0;
-    private int maxNumberStation = 9;
-    private int minSoundVolume = 0;
-    private int maxSoundVolume = 100;
-    private int currentNumberStation = 5;
-    private int currentSoundVolume = 50;
+    private int maxStation = 9;
+    private int minStation = 0;
+    private int currentStation;
+    private int currentVolume;
+    private int minVolume = 0;
+    private int maxVolume = 100;
 
-    public Radio(int currentNumberStation) {
-        if (currentNumberStation == maxNumberStation) {
-            this.currentNumberStation = minNumberStation;
-            return;}
-        currentNumberStation++;
-        this.currentNumberStation = currentNumberStation;
-        return;
-    }
-
-    public void numberStationPrev() {
-        if (currentNumberStation == minNumberStation) currentNumberStation = maxNumberStation+1;
-        currentNumberStation--;
-        return;
-    }
-
-    public void volumeStationUp() {
-        if (currentSoundVolume >= maxSoundVolume) {
-            currentSoundVolume = maxSoundVolume;
-            return;
-        } else {
-            currentSoundVolume++;
+    public void setCurrentStation(int currentStation) {
+        if (currentStation > maxStation) {
+            this.currentStation = maxStation;
             return;
         }
-
-    }
-
-    public void volumeStationDoun() {
-        if (currentSoundVolume <= minSoundVolume) {
-            currentSoundVolume = minSoundVolume;
-            return;
-        } else {
-            currentSoundVolume--;
+        if (currentStation < minStation) {
+            this.currentStation = minStation;
             return;
         }
+        this.currentStation = currentStation;
+    }
+
+
+    public void setCurrentVolume(int currentVolume) {
+        if (currentVolume > maxVolume) {
+            this.currentVolume = maxVolume;
+            return;
+        }
+        if (currentVolume <  minVolume) {
+            this.currentVolume = minVolume;
+            return;
+        }
+        this.currentVolume = currentVolume;
+    }
+
+    public void increaseStation() {
+        if (currentStation == maxStation) {
+            this.currentStation = minStation;
+            return;
+        }
+        currentStation++;
+    }
+
+    public void decreaseStation() {
+        if (currentStation == minStation) {
+            this.currentStation = maxStation;
+            return;
+        }
+        currentStation--;
+    }
+
+    public void increaseVolume() {
+        if (currentVolume == maxVolume) {
+            return;
+        }
+        currentVolume++;
+    }
+
+    public void decreaseVolume() {
+        if (currentVolume == minVolume) {
+            return;
+        }
+        currentVolume--;
     }
 }
-
