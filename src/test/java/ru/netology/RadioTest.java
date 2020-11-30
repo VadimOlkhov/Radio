@@ -8,31 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
 
-    Radio station = new Radio(9);
-
     @Test
-    public void enteredMaxNumberStation() {
-        int maxNumberStation = 3;
-        Radio station = new Radio(maxNumberStation);
-        int actual = station.getMaxNumberStation();
-        int expected = maxNumberStation;
-        assertEquals(expected, actual);
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "NumberStationEnter,0,0",
-            "NumberStationEnter,6,6",
-            "NumberStationEnter,9,9",
-            "NumberStationEnter,-1,0",
-            "NumberStationEnter,10,9"
-    })
-    public void numberStationEntered(String name, int enteredNumberStation, int expected) {
+    public void numberStationEntered() {
+        int enteredNumberStation = 7;
+        int expected = 7;
+        Radio station = new Radio();
         station.setCurrentNumberStation(enteredNumberStation);
-        station.numberStationEntered(enteredNumberStation);
         int actual = station.getCurrentNumberStation();
         assertEquals(expected, actual);
     }
+
+    Radio station = new Radio();
 
     @ParameterizedTest
     @CsvSource({
@@ -41,10 +27,23 @@ class RadioTest {
             "NumberStationFrom_9Forward,9,0",
     })
     public void numberStationNext(String name, int currentNumberStation, int expected) {
-        station.setCurrentNumberStation(currentNumberStation);
-        station.numberStationNext();
-        int actual = station.getCurrentNumberStation();
+        Radio radio = new Radio(
+                currentNumberStation
+        );
+        int actual = radio.getCurrentNumberStation();
         assertEquals(expected, actual);
+    }
+
+
+    Radio radTest = new Radio();
+    Radio radioTest = new Radio();
+    @Test
+    public void test1() {
+        radioTest.setCurrentNumberStation(888);
+        Radio radio = new Radio(63);
+        System.out.println(radio.getCurrentNumberStation());
+        System.out.println(radTest.getCurrentNumberStation());
+        System.out.println(radioTest.getCurrentNumberStation());
     }
 
     @ParameterizedTest
@@ -54,6 +53,7 @@ class RadioTest {
             "NumberStationFrom_9Forward,9,8"
     })
     public void numberStationPrev(String name, int currentNumberStation, int expected) {
+        Radio station = new Radio();
         station.setCurrentNumberStation(currentNumberStation);
         station.numberStationPrev();
         int actual = station.getCurrentNumberStation();
@@ -68,6 +68,7 @@ class RadioTest {
 
     })
     public void volumeStationUp(String name, int currentSoundVolume, int expected) {
+        Radio station = new Radio();
         station.setCurrentSoundVolume(currentSoundVolume);
         station.volumeStationUp();
         int actual = station.getCurrentSoundVolume();
@@ -81,6 +82,7 @@ class RadioTest {
             "volumeDownFrom_min,0,0"
     })
     public void volumeStationDoun(String name, int currentSoundVolume, int expected) {
+        Radio station = new Radio();
         station.setCurrentSoundVolume(currentSoundVolume);
         station.volumeStationDoun();
         int actual = station.getCurrentSoundVolume();
