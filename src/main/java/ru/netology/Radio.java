@@ -1,5 +1,30 @@
 package ru.netology;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+
+public class Radio {
+    private int maxStation = 9;
+    private int minStation = 0;
+    private int currentStation;
+    private int currentVolume;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+
+    public void setCurrentStation(int currentStation) {
+        if (currentStation > maxStation) {
+            this.currentStation = maxStation;
+            return;
+        }
+        if (currentStation < minStation) {
+            this.currentStation = minStation;
+
 import java.security.PrivateKey;
 
 public class Radio {
@@ -42,10 +67,44 @@ public class Radio {
         }
         if (currentNumberStation <= minNumberStation) {
             this.currentNumberStation = minNumberStation;
+
             return;
         }
         this.currentNumberStation=currentNumberStation;
     }
+
+
+
+    public void setCurrentVolume(int currentVolume) {
+        if (currentVolume > maxVolume) {
+            this.currentVolume = maxVolume;
+            return;
+        }
+        if (currentVolume <  minVolume) {
+            this.currentVolume = minVolume;
+            return;
+        }
+        this.currentVolume = currentVolume;
+    }
+
+    public void increaseStation() {
+        if (currentStation == maxStation) {
+            this.currentStation = minStation;
+            return;
+        }
+        currentStation++;
+    }
+
+    public void decreaseStation() {
+        if (currentStation == minStation) {
+            this.currentStation = maxStation;
+            return;
+        }
+        currentStation--;
+    }
+
+    public void increaseVolume() {
+        if (currentVolume == maxVolume) {
 
     public void numberStationNext() {
         if (currentNumberStation == maxNumberStation) {
@@ -81,10 +140,18 @@ public class Radio {
             return;
         } else {
             currentSoundVolume--;
+
             return;
         }
+        currentVolume++;
+    }
+
+
+    public void decreaseVolume() {
+        if (currentVolume == minVolume) {
+            return;
+        }
+        currentVolume--;
     }
 
 }
-
-
